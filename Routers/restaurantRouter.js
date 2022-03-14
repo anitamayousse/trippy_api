@@ -42,10 +42,15 @@ const schema = Joi.object({
 });
 // routes
 router.get("/", (req, res) => {
-
+    const restaurant = restaurants[req.params.id - 1];
+    const filteredRestaurants = restaurants.filter ((restaurant) =>{
+    return (
+        restaurant.city === req.query.city
+    );
+    });
 	res.json({
 		message:"All the restaurants",
-		restaurants});
+		filteredRestaurants});
 });
 
 router.get("/:id", (req, res) => {
