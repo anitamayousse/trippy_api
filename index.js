@@ -10,9 +10,9 @@ app.use(function (req, res, next) {
 
 // routers
 const hotelRouter = require("./Routers/hotelRouter");
-const restaurantRouter = require("./Routers/restaurantRouter");
-app.use("/hotel", hotelRouter);
-app.use("/restaurant", restaurantRouter);
+//const restaurantRouter = require("./Routers/restaurantRouter");
+app.use("/hotels", hotelRouter);
+//app.use("/restaurant", restaurantRouter);
 
 
 // Handle errors

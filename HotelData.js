@@ -1,4 +1,4 @@
-const hotel = [
+const hotels = [
     {
 		"id": 1,
 		"name": "Imperial Hotel",
@@ -34,4 +34,4 @@ const hotel = [
 	}
 ]
 
-module.exports = hotel;
+module.exports = hotels;
