@@ -89,5 +89,16 @@ router.patch("/:id", (req, res) => {
 	});
 });
 
+router.delete("/:id", (req, res) => {
+	const hotel = hotels[req.params.id - 1];
+
+    hotels.shift({
+        hotel});
+
+	res.json({
+		message: "Hotel is deleted from the list!",
+		hotels,
+	});
+});
 // on exporte le router
 module.exports = router;
