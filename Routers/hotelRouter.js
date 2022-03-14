@@ -73,7 +73,18 @@ router.post("/", (req, res) => {
         hotel});
 
 	res.json({
-		message: "User added",
+		message: "Hotel added",
+		hotels,
+	});
+});
+
+router.patch("/:id", (req, res) => {
+	const hotelName = hotels[req.params.id - 1];
+
+    hotelName.name = req.body.name 
+
+	res.json({
+		message: "Name changed",
 		hotels,
 	});
 });
