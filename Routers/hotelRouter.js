@@ -8,10 +8,6 @@ const hotels = require('../HotelData');
 //schema 
 
 const schema = Joi.object({
-    id: Joi.number()
-	.min(1)
-	.integer()
-	.required(),
 	name: Joi.string()
 	.required()
 	.alphanum()
@@ -34,10 +30,8 @@ const schema = Joi.object({
     .max(5)
 	.integer()
 	.required(),
-    cuisine: Joi.string()
-	.alphanum()
-	.min(1)
-	.max(20),
+    hasSpa: Joi.boolean().required(),
+    hasPool: Joi.boolean().required(),
     priceCategory: Joi.number()
 	.min(1)
     .max(5)
@@ -92,8 +86,7 @@ router.patch("/:id", (req, res) => {
 router.delete("/:id", (req, res) => {
 	const hotel = hotels[req.params.id - 1];
 
-    hotels.shift({
-        hotel});
+    hotels.splice(hotels.indexOf(hotel), 1);
 
 	res.json({
 		message: "Hotel is deleted from the list!",
