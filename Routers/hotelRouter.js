@@ -40,11 +40,23 @@ const schema = Joi.object({
 });
 // routes
 router.get("/", (req, res) => {
-
+    const filteredHotels = hotels.filter((hotel) =>{
+    return (
+        hotel.city === req.query.city &&
+		hotel.country === req.query.country &&
+		hotel.hasPool.toString() === req.query.hasPool &&
+		hotel.hasSpa.toString() === req.query.hasSpa &&
+		hotel.priceCategory == req.query.priceCategory
+//example of URL to check in Postman
+//http://localhost:8000/hotels?priceCategory=3&country=France&city=Paris&hasSpa=true&hasPool=true
+    );
+    });
 	res.json({
-		message:"All the hotels",
-		hotels});
+		message:"All the hotels in your criteria",
+		filteredHotels});
 });
+
+
 
 router.get("/:id", (req, res) => {
 

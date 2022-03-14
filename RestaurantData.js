@@ -28,7 +28,18 @@ const restaurants = [
 		"stars": 5,
 		"cuisine": "vegan",
 		"priceCategory": 2
+	},
+	{
+		"id": 4,
+		"name": "Le Mandarin Orientel",
+		"address": "251 Rue St Honoré",
+		"city": "Paris",
+		"country": "France",
+		"stars": 4,
+		"cuisine": "french",
+		"priceCategory": 2
 	}
+
 ]
 
 module.exports = restaurants;

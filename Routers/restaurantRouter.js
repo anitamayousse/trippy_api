@@ -10,7 +10,6 @@ const restaurants = require('../RestaurantData');
 const schema = Joi.object({
 	name: Joi.string()
 	.required()
-	.alphanum()
 	.min(4)
 	.max(20),
     address: Joi.string()
@@ -42,14 +41,15 @@ const schema = Joi.object({
 });
 // routes
 router.get("/", (req, res) => {
-    const restaurant = restaurants[req.params.id - 1];
-    const filteredRestaurants = restaurants.filter ((restaurant) =>{
+    const filteredRestaurants = restaurants.filter((restaurant) =>{
     return (
-        restaurant.city === req.query.city
+        restaurant.city === req.query.city &&
+		restaurant.country === req.query.country &&
+		restaurant.priceCategory == req.query.priceCategory
     );
     });
 	res.json({
-		message:"All the restaurants",
+		message:"All the restaurants in your criteria",
 		filteredRestaurants});
 });
 
@@ -102,3 +102,6 @@ router.delete("/:id", (req, res) => {
 });
 // on exporte le router
 module.exports = router;
+
+
+//?priceCategory=3&&country=France&&city=Paris
