@@ -44,7 +44,7 @@ router.get("/", (req, res) => {
 	const filteredHotels = hotels.filter(hotel => {
 		let isValid = true;
 		for (key in filters) {
-		isValid = isValid && hotel[key] == filters[key];
+		isValid = isValid && hotel[key].toString() == filters[key];
 		}
 		return isValid;
 	});

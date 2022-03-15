@@ -41,13 +41,16 @@ const schema = Joi.object({
 });
 // routes
 router.get("/", (req, res) => {
-    const filteredRestaurants = restaurants.filter((restaurant) =>{
-    return (
-        restaurant.city === req.query.city &&
-		restaurant.country === req.query.country &&
-		restaurant.priceCategory == req.query.priceCategory
-    );
-    });
+	const filters = req.query;
+	const filteredRestaurants = restaurants.filter(restaurant => {
+		let isValid = true;
+		for (key in filters) {
+		isValid = isValid && restaurant[key].toString() == filters[key];
+		}
+		return isValid;
+	});
+
+//http://localhost:8000/restaurants?priceCategory=3&country=France&city=Paris
 	res.json({
 		message:"All the restaurants in your criteria",
 		filteredRestaurants});
