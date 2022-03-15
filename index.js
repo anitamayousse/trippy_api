@@ -24,7 +24,7 @@ app.use(
 const hotelRouter = require("./Routers/hotelRouter");
 const restaurantRouter = require("./Routers/restaurantRouter");
 app.use("/hotels", hotelRouter);
-app.use("/restaurant", restaurantRouter);
+app.use("/restaurants", restaurantRouter);
 
 
 //Handle errors
