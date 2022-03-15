@@ -1,9 +1,9 @@
+//------------------ localhost:8000/restaurant/---------------//
 const express = require("express");
 const router = express.Router();
+//Libraries
 const Joi = require("Joi");
-// localhost:8000/restaurant/
-// localhost:8000/restaurant/:id
-
+//Data
 const restaurants = require('../RestaurantData');
 //schema 
 
@@ -39,7 +39,10 @@ const schema = Joi.object({
 	.integer()
 	.required(),
 });
-// routes
+//-------------------------Routes--------------------------------//
+
+//Route to find the restaurants in a specific criteria (country/city/priceCategory/starts/cuisine/name/address/id)
+//Example of url to test in Postman:http://localhost:8000/restaurants?priceCategory=3&country=France&city=Paris
 router.get("/", (req, res) => {
 	const filters = req.query;
 	const filteredRestaurants = restaurants.filter(restaurant => {
@@ -50,7 +53,6 @@ router.get("/", (req, res) => {
 		return isValid;
 	});
 
-//http://localhost:8000/restaurants?priceCategory=3&country=France&city=Paris
 	res.json({
 		message:"All the restaurants in your criteria",
 		filteredRestaurants});
@@ -62,7 +64,7 @@ router.get("/:id", (req, res) => {
 
 	res.json(restaurant);
 });
-
+//Route to add a new restaurant 
 router.post("/", (req, res) => {
 	const restaurant = req.body;
     const validationResult = schema.validate(restaurant);
@@ -81,7 +83,7 @@ router.post("/", (req, res) => {
 		restaurants,
 	});
 });
-
+//Route to modify a restaurant by id 
 router.patch("/:id", (req, res) => {
 	const restaurantName = restaurants[req.params.id - 1];
 
@@ -92,7 +94,7 @@ router.patch("/:id", (req, res) => {
 		restaurants,
 	});
 });
-
+//Route to delete a restaurant by id 
 router.delete("/:id", (req, res) => {
 	const restaurant = restaurants[req.params.id - 1];
 
@@ -103,8 +105,5 @@ router.delete("/:id", (req, res) => {
 		restaurants,
 	});
 });
-// on exporte le router
+//Export the router
 module.exports = router;
-
-
-//?priceCategory=3&&country=France&&city=Paris

@@ -1,5 +1,7 @@
+//------------------ localhost:8000/---------------
 const express = require("express");
 const app = express();
+//Libraries
 const rateLimit = require("express-rate-limit");
 //Middlewares
 app.use(express.json());
@@ -18,19 +20,19 @@ app.use(
   })
 );
 
-// routers
+//Routers
 const hotelRouter = require("./Routers/hotelRouter");
 const restaurantRouter = require("./Routers/restaurantRouter");
 app.use("/hotels", hotelRouter);
 app.use("/restaurant", restaurantRouter);
 
 
-// Handle errors
+//Handle errors
 app.get("*", (_req, res) => {
 	res.status(404).send("Page not found");
 });
 
-// Start the server
+//Start the server
 app.listen(8000, () => {
 	console.log("Listening");
 });
