@@ -1,5 +1,13 @@
 //------------------ localhost:8000/restaurant/---------------//
 const express = require("express");
+const dotenv = require("dotenv")
+dotenv.config({
+	path: "./config.env",
+});
+const { Pool } = require("pg");
+console.log(Pool);
+const app = express();
+const Postgres = new Pool ({ ssl: { rejectUnauthorized: false }});
 const router = express.Router();
 //Libraries
 const Joi = require("Joi");
@@ -43,19 +51,40 @@ const schema = Joi.object({
 
 //Route to find the restaurants in a specific criteria (country/city/priceCategory/starts/cuisine/name/address/id)
 //Example of url to test in Postman:http://localhost:8000/restaurants?priceCategory=3&country=France&city=Paris
-router.get("/", (req, res) => {
-	const filters = req.query;
-	const filteredRestaurants = restaurants.filter(restaurant => {
-		let isValid = true;
-		for (key in filters) {
-		isValid = isValid && restaurant[key].toString() == filters[key];
-		}
-		return isValid;
-	});
+// router.get("/", (req, res) => {
+// 	const filters = req.query;
+// 	const filteredRestaurants = restaurants.filter(restaurant => {
+// 		let isValid = true;
+// 		for (key in filters) {
+// 		isValid = isValid && restaurant[key].toString() == filters[key];
+// 		}
+// 		return isValid;
+// 	});
 
-	res.json({
-		message:"All the restaurants in your criteria",
-		filteredRestaurants});
+// 	res.json({
+// 		message:"All the restaurants in your criteria",
+// 		filteredRestaurants});
+// });
+
+// router.get("/:id", (req, res) => {
+
+//     const restaurant = restaurants[req.params.id - 1];
+
+// 	res.json(restaurant);
+// });
+
+//get with SQL
+router.get("/:name",async (req, res) => {
+	let restaurants;
+	try{
+	restaurants = await Postgres.query ("SELECT * FROM restaurants WHERE restaurants.name=$1", [req.params.name])
+	} catch (err)  {
+		console.error(err);
+		return res.status(400).json({
+			message: "Erorr: Please enter a number",
+		});
+	}
+	res.json(restaurants.rows);
 });
 
 router.get("/:id", (req, res) => {
@@ -64,6 +93,7 @@ router.get("/:id", (req, res) => {
 
 	res.json(restaurant);
 });
+
 //Route to add a new restaurant 
 router.post("/", (req, res) => {
 	const restaurant = req.body;
