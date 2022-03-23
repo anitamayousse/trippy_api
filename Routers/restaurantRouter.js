@@ -68,14 +68,18 @@ router.get("/",async (req, res) => {
 	const restaurants = await restaurantModel.find(req.body);
 	res.send(restaurants);
 });
-
-
+//get by query
+router.get("/query",async (req, res) => {
+	const restaurants = await restaurantModel.find(req.query);
+	res.send(restaurants);
+});
+//get by id
 router.get("/:id", async (req, res) => {
 	const restaurant = await restaurantModel.findById(req.params.id);
 
 	res.json(restaurant);
 });
-
+//post to MongoDB
 router.post("/", async (req, res) => {
 	await restaurantModel.create(req.body);
 
