@@ -1,5 +1,13 @@
 //------------------ localhost:8000/hotels/---------------
 const express = require("express");
+const dotenv = require("dotenv")
+dotenv.config({
+	path: "./config.env",
+});
+const { Pool } = require("pg");
+console.log(Pool);
+const app = express();
+const Postgres = new Pool ({ ssl: { rejectUnauthorized: false }});
 const router = express.Router();
 //Libraries
 const Joi = require("Joi");
