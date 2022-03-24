@@ -10,6 +10,7 @@ mongoose
 	)
 	.then(() => console.log("Connected to MongoDB"));
 const restaurantModel = require("../models/RestaurantDataModel");
+const commentsModel = require("../models/CommentsModel");
 //const dotenv = require("dotenv")
 //dotenv.config({
 	//path: "./config.env",
@@ -84,7 +85,7 @@ router.post("/", async (req, res) => {
 	await restaurantModel.create(req.body);
 
 	res.status(201).json({
-		message: "User created",
+		message: "restaurant has been created",
 	});
 });
 
@@ -107,6 +108,30 @@ router.delete("/:id", async (req, res) => {
 	});
 });
 
+
+
+router.post('/:id/comment', async (req, res) => {
+	// find out which post you are commenting
+	 const id = req.params.id;
+	// get the comment text and record post id
+	 const comment = new commentsModel({
+	 username: req.body.username,
+	 text: req.body.text,
+	 restaurant: id
+  })
+  res.json({
+	message: "Thank you for your comments!",
+});
+	// save comment
+ await comment.save();
+	// get this particular post
+ const postRelated = await restaurantModel.findById(id);
+	// push the comment into the post.comments array
+ postRelated.comments.push(comment);
+	// save and redirect...
+ await postRelated.save(comment)
+
+})
 //-------------------------SQL--------------------------------//
 //get by key and value with SQL
 
