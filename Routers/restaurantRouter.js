@@ -99,6 +99,14 @@ router.patch("/:id", async (req, res) => {
 	});
 });
 
+router.delete("/:id", async (req, res) => {
+	await restaurantModel.findByIdAndDelete(req.params.id);
+
+	res.json({
+		message: "This restaurant has been deleted from our database",
+	});
+});
+
 //-------------------------SQL--------------------------------//
 //get by key and value with SQL
 
