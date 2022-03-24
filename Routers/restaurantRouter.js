@@ -3,7 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 mongoose
 	.connect(
-		"mongodb+srv://Anita:7qOQrj5ukW5T8nOg@cluster0.oppld.mongodb.net/Trippy?retryWrites=true&w=majority",
+		"mongodb+srv://Anita:kzu9AaUTgJWAT4TN@cluster0.wiyzu.mongodb.net/Trippy?retryWrites=true&w=majority",
 		{
 			useNewUrlParser: true,
 		}
@@ -85,6 +85,17 @@ router.post("/", async (req, res) => {
 
 	res.status(201).json({
 		message: "User created",
+	});
+});
+
+router.patch("/:id", async (req, res) => {
+	await restaurantModel.findByIdAndUpdate(req.params.id, {
+		name: req.body.name,
+		stars:req.body.stars,
+	});
+
+	res.json({
+		message: "Name and Stars have been upadated",
 	});
 });
 
